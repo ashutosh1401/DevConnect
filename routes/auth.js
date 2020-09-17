@@ -54,8 +54,8 @@ router.post("/login", (req, res) => {
         if (isMatch) {
           //res.send("User successfully signed");
           const token = jwt.sign({ _id: savedUser._id.toString() }, JWT_SECRET);
-          const { _id, name, email } = savedUser;
-          res.send({ token, user: { _id, name, email } });
+          const { _id, name, email, followers, following } = savedUser;
+          res.send({ token, user: { _id, name, email, followers, following } });
         } else {
           return res.status(422).send("Error wromg Email or Password");
         }
