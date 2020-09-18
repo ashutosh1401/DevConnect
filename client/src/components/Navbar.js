@@ -15,7 +15,7 @@ const NavBar = () => {
           <Link to="/create">Create Post</Link>
         </li>,
         <li>
-          <Link to="/myfollowingpost">My Following Post</Link>
+          <Link to="/myfollowing">Following Post</Link>
         </li>,
         <li>
           <button

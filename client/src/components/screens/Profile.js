@@ -16,7 +16,7 @@ const Profile = () => {
   }, [])
   console.log(mypics);
   return (
-    <div style={{ maxWidth: "550px", margin: "0px" }}>
+    <div style={{ maxWidth: "550px", margin: "0px auto" }}>
       <div
         style={{
           display: "flex",
