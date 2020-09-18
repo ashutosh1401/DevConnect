@@ -15,17 +15,21 @@ router.get("/allposts", checkAuth, (req, res) => {
     });
 });
 
-router.get("/getfollowposts", checkAuth, (req, res) => {
+
+router.get('/getsubpost', checkAuth, (req, res) => {
+
+  // if postedBy in following
   Post.find({ postedBy: { $in: req.user.following } })
     .populate("postedBy", "_id name")
     .populate("comments.postedBy", "_id name")
-    .then((posts) => {
-      res.json({ posts });
+    .sort('-createdAt')
+    .then(posts => {
+      res.json({ posts })
     })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+    .catch(err => {
+      console.log(err)
+    })
+})
 
 router.post('/createpost', checkAuth, (req, res) => {
   const { title, body, pic } = req.body
