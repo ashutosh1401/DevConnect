@@ -26,7 +26,7 @@ Also do install dependencies at client folder for working of client side.
 **NOTE**:- Currently in development MongoDB atlas or any cloud server is not being used so make sure to run the MongoDB server at backend by yourselves.
 ### Front End
 
-Frontend is designed using React JS and Material UI.
+Frontend is designed using React JS and Materialize CSS.
 
 ### Back End
 
