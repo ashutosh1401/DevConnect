@@ -63,4 +63,16 @@ router.put('/unfollow', checkAuth, (req, res) => {
     }
     )
 })
+
+router.put("/updatepic", checkAuth, (req, res) => {
+    User.findByIdAndUpdate(req.user._id, {
+        $set: { pic: req.body.pic }
+    }, { new: true },
+        (err, result) => {
+            if (err) {
+                return res.status(422).json({ error: "pic canot post" })
+            }
+            res.json(result)
+        })
+})
 module.exports = router;

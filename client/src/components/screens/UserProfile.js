@@ -91,7 +91,8 @@ const Profile = () => {
           }}>
             <div>
               <img style={{ width: "160px", height: "160px", borderRadius: "80px" }}
-                src="https://images.unsplash.com/photo-1598195596234-e04b82ef8adf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60"
+                src={userProfile.user.pic}
+                alt="profileimg"
               />
             </div>
             <div>
@@ -101,6 +102,8 @@ const Profile = () => {
                 <h6>{userProfile.posts.length} posts</h6>
                 <h6>{userProfile.user.followers.length} followers</h6>
                 <h6>{userProfile.user.following.length} following</h6>
+                {userProfile.user.github ? <a href={userProfile.user.github}><i className="fab fa-github"></i></a> : ''}
+                {userProfile.user.linkedin ? <a href={userProfile.user.linkedin}><i className="fab fa-linkedin"></i></a> : ''}
               </div>
               {showFollow ?
                 <button style={{

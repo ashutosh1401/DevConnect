@@ -11,7 +11,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/signup", (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, github, linkedin, pic } = req.body;
   if (!name || !email || !password) {
     return res.status(422).send({ error: "pls add all fields correctly" });
   }
@@ -26,6 +26,9 @@ router.post("/signup", (req, res) => {
           name,
           email,
           password: hashPassword,
+          github,
+          linkedin,
+          pic
         });
         user
           .save()
@@ -54,8 +57,8 @@ router.post("/login", (req, res) => {
         if (isMatch) {
           //res.send("User successfully signed");
           const token = jwt.sign({ _id: savedUser._id.toString() }, JWT_SECRET);
-          const { _id, name, email, followers, following } = savedUser;
-          res.send({ token, user: { _id, name, email, followers, following } });
+          const { _id, name, email, followers, following, pic, github, linkedin } = savedUser;
+          res.send({ token, user: { _id, name, email, followers, following, pic, github, linkedin } });
         } else {
           return res.status(422).send("Error wromg Email or Password");
         }

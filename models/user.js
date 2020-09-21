@@ -31,6 +31,16 @@ const userSchema = new mongoose.Schema({
       }
     },
   },
+  github: {
+    type: String
+  },
+  linkedin: {
+    type: String
+  },
+  pic: {
+    type: String,
+    default: "https://res.cloudinary.com/devimg/image/upload/v1600697065/defaultpic_dg4iun.png"
+  },
   followers: [{ type: ObjectId, ref: "User" }],
   following: [{ type: ObjectId, ref: "User" }],
 });

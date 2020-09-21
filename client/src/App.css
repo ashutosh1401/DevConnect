@@ -58,3 +58,7 @@ a{
 .material-icons:hover{
   cursor: pointer;
 }
+
+.fab {
+  width: 50%;
+}
