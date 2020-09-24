@@ -4,8 +4,9 @@ const Project = require('../models/project')
 const checkAuth = require("../middleware/requireLogin");
 
 router.post("/createproject", checkAuth, (req, res) => {
-    const { title, body, photo, url } = req.body;
-    if (!title || !body || !photo || !url) {
+    const { title, body, photo, video } = req.body;
+
+    if (!title || !body) {
         return res.status(422).json({ error: "Please add all fields" })
     }
     req.user.password = undefined
@@ -13,7 +14,7 @@ router.post("/createproject", checkAuth, (req, res) => {
         title,
         body,
         photo,
-        url,
+        video,
         postedBy: req.user
     })
     project.save().then(result => {
@@ -33,6 +34,32 @@ router.get("/getprojects", checkAuth, (req, res) => {
         }).catch(err => {
             console.log(err);
         })
+})
+
+router.put("/likeproj", checkAuth, (req, res) => {
+    Project.findByIdAndUpdate(req.body.projId, {
+        $push: { likeproj: req.user._id }
+    }, {
+        new: true
+    }).exec((err, result) => {
+        if (err) {
+            return res.status(422).json({ error: err })
+        }
+        res.json(result);
+    })
+})
+
+router.put("/unlikeproj", checkAuth, (req, res) => {
+    Project.findByIdAndUpdate(req.body.projId, {
+        $push: { likeproj: req.user._id }
+    }, {
+        new: true
+    }).exec((err, result) => {
+        if (err) {
+            return res.status(422).json({ error: err })
+        }
+        res.json(result);
+    })
 })
 
 router.delete("/deleteproject/:projId", checkAuth, (req, res) => {

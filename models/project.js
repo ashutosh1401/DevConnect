@@ -13,7 +13,7 @@ const projectSchema = new mongoose.Schema({
     photo: {
         type: String
     },
-    url: {
+    video: {
         type: String,
     },
     likes: [{ type: ObjectId, ref: "User" }],
