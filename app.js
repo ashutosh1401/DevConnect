@@ -20,6 +20,7 @@ app.use(function (req, res, next) {
 app.use(require("./routes/auth"));
 app.use(require("./routes/post"));
 app.use(require("./routes/user"));
+app.use(require("./routes/project"));
 
 
 app.listen(PORT, () => {
