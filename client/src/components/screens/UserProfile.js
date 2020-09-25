@@ -102,9 +102,9 @@ const Profile = () => {
                 <h6>{userProfile.posts.length} posts</h6>
                 <h6>{userProfile.user.followers.length} followers</h6>
                 <h6>{userProfile.user.following.length} following</h6>
-                {userProfile.user.github ? <a href={userProfile.user.github}><i className="fab fa-github"></i></a> : ''}
-                {userProfile.user.linkedin ? <a href={userProfile.user.linkedin}><i className="fab fa-linkedin"></i></a> : ''}
               </div>
+              {userProfile.user.github ? <a href={userProfile.user.github}><i className="fab fa-github fa-3x"></i></a> : ''}
+              {userProfile.user.linkedin ? <a href={userProfile.user.linkedin}><i className="fab fa-linkedin fa-3x"></i></a> : ''}
               {showFollow ?
                 <button style={{
                   margin: "10px"
