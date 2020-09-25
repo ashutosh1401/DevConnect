@@ -62,7 +62,28 @@ router.put("/unlikeproj", checkAuth, (req, res) => {
     })
 })
 
-router.delete("/deleteproject/:projId", checkAuth, (req, res) => {
+router.put('/commentproj', checkAuth, (req, res) => {
+    const comment = {
+        text: req.body.text,
+        postedBy: req.user._id
+    }
+    Project.findByIdAndUpdate(req.body.projId, {
+        $push: { comments: comment }
+    }, {
+        new: true,
+    }).populate("comments.postedBy", "_id name")
+        .populate("postedBy", "_id name")
+        .exec((err, result) => {
+            if (err) {
+                return res.status(422).json({ error: err })
+            }
+            else {
+                res.json(result);
+            }
+        })
+})
+
+router.delete("/deleteproj/:projId", checkAuth, (req, res) => {
     Project.findOne({ _id: req.params.projId })
         .populate("postedBy", "_id")
         .exec((err, project) => {
