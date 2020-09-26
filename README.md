@@ -23,16 +23,21 @@ Also do install dependencies at client folder for working of client side.
 - First navigate to the cloned repo on your PC and enter `npm start` to run the backend.
 - Second open a new terminal and navigate to client folder and enter `npm start` this would run react server and application would start working.
 
-**NOTE**:- Currently in development MongoDB atlas or any cloud server is not being used so make sure to run the MongoDB server at backend by yourselves.
+**NOTE**:- Currently in development. MongoDB atlas or any cloud server is not being used so make sure to run the MongoDB server at backend by yourselves using MongoDB driver.
+
 ### Front End
 
 Frontend is designed using React JS and Materialize CSS.
 
 ### Back End
 
-Backend and API is completely designed using NodeJS, ExpressJs and MongoDb is used as a database for this project
+Backend and API is completely designed using NodeJS, ExpressJS and MongoDB is used as a database for this project.
 
 #### Info
     
 Currently this project is still on development phase.
 
+
+#### Contribution
+
+You can contribute to this repo by assigning issues to it or resloving issues in issues tab.
