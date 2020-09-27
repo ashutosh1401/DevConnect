@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Project = require('../models/project')
+const multer = require('multer');
+const sharp = require('sharp')
 const checkAuth = require("../middleware/requireLogin");
 
 router.post("/createproject", checkAuth, (req, res) => {
@@ -87,7 +89,7 @@ router.delete("/deleteproj/:projId", checkAuth, (req, res) => {
     Project.findOne({ _id: req.params.projId })
         .populate("postedBy", "_id")
         .exec((err, project) => {
-            if (err || !project) {
+            if (err) {
                 return res.status(422).json({ error: err })
             }
             if (project.postedBy._id.toString() === req.user._id.toString()) {
@@ -99,6 +101,28 @@ router.delete("/deleteproj/:projId", checkAuth, (req, res) => {
                     })
             }
         })
+})
+
+const upload = multer({
+    limits: {
+        fileSize: 10000000,
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(jpeg|jpg|png)$/)) {
+            return cb(new Error('Please upload a image file'))
+        }
+        cb(undefined, true);
+    }
+})
+
+router.post('/postphoto', checkAuth, upload.single("photo"), (req, res) => {
+    const buffer = sharp(req.file.buffer).png().toBuffer();
+    req.user.photo = buffer;
+    req.user.save().then((result) => {
+        res.send(result);
+    }).catch(err => {
+        console.log(err);
+    })
 })
 
 module.exports = router;

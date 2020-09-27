@@ -13,7 +13,7 @@ const CreateProject = () => {
     console.log(tokenData);
 
     useEffect(() => {
-        if (url || video) {
+        if (url) {
             fetch("/createproject", {
                 method: "post",
                 headers: {
@@ -23,7 +23,7 @@ const CreateProject = () => {
                 body: JSON.stringify({
                     title,
                     body,
-                    pic: url,
+                    photo: url,
                     video,
                 }),
             })
@@ -37,7 +37,7 @@ const CreateProject = () => {
                             html: "Created Post Succesfully",
                             classes: "#76ff03 light-green accent-3",
                         });
-                        history.push("/");
+                        history.push("/explore");
                     }
                 })
                 .catch((err) => {
@@ -60,23 +60,24 @@ const CreateProject = () => {
         })
             .then((res) => res.json())
             .then((data) => {
+                console.log(data);
                 setUrl(data.url);
             })
             .catch((err) => console.log(err));
 
-        const newData = new FormData();
-        newData.append("file", video);
-        newData.append("upload_preset", "DevConnect");
-        newData.append("cloud_name", "devimg");
+        // const newData = new FormData();
+        // newData.append("file", video);
+        // newData.append("upload_preset", "DevConnect");
+        // newData.append("cloud_name", "devimg");
 
-        fetch("https://api.cloudinary.com/v1_1/devimg/image/upload", {
-            method: "POST",
-            body: newData,
-        }).then(res => res.json())
-            .then(data => {
-                console.log(data);
-                //setVideo()
-            })
+        // fetch("https://api.cloudinary.com/v1_1/devimg/image/upload", {
+        //     method: "POST",
+        //     body: newData,
+        // }).then(res => res.json())
+        //     .then(data => {
+        //         console.log(data);
+        //         setVideo(data.video);
+        //     })
     };
 
     return (
@@ -115,7 +116,7 @@ const CreateProject = () => {
                     <input className="file-path validate" type="text" />
                 </div>
             </div>
-            <div className="file-field input-field">
+            {/*<div className="file-field input-field">
                 <div className="btn">
                     <span>Upload Video</span>
                     <input
@@ -126,9 +127,9 @@ const CreateProject = () => {
                     />
                 </div>
                 <div className="file-path-wrapper">
-                    <input className="file-path validate" type="text" />
+                    <input className="file-path" type="text" />
                 </div>
-            </div>
+                    </div> */}
             <button
                 className="btn waves-effect waves-light #039be5 light-blue darken-1"
                 onClick={() => PostDetails()}

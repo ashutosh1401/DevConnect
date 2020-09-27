@@ -11,7 +11,8 @@ const projectSchema = new mongoose.Schema({
         required: true,
     },
     photo: {
-        type: String
+        type: String,
+        required: true
     },
     video: {
         type: String,
