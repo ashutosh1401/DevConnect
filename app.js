@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const { MONGOURI } = require("./config/keys");
 const User = require("./models/user");
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 mongoose
   .connect(MONGOURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,6 +22,13 @@ app.use(require("./routes/post"));
 app.use(require("./routes/user"));
 app.use(require("./routes/project"));
 
+if (process.env.NODE_ENV == "production") {
+  app.use(express.static("client/build"))
+  const path = require('path')
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  })
+}
 
 app.listen(PORT, () => {
   console.log("Listening on Port " + PORT);
