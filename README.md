@@ -37,6 +37,10 @@ Backend and API is completely designed using NodeJS, ExpressJS and MongoDB is us
     
 Currently this project is still on development phase.
 
+#### Deployment
+
+You could find deployed version of app at https://dev-connect-20.herokuapp.com/ .
+Changes are being made as new features are being added.
 
 #### Contribution
 
