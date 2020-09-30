@@ -2,6 +2,7 @@
 
 This is a social media platform where developers could post images of their work could also interact with other developers.
 The UI is almost similiar to that of Instagram.
+The application is now deployed at https://dev-connect-20.herokuapp.com/ .
 
 ### REQUIREMENTS
 Node JS must be installed in PC.
