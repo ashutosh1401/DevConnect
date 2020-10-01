@@ -3,8 +3,17 @@ const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../config/keys");
+const { JWT_SECRET, SENDGRID_API_KEY } = require("../config/keys");
 const requireLogin = require("../middleware/requireLogin");
+const nodemailer = require('nodemailer')
+const sendgridTransport = require('nodemailer-sendgrid-transport')
+
+
+const transport = nodemailer.createTransport(sendgridTransport({
+  auth: {
+    api_key: SENDGRID_API_KEY
+  }
+}))
 
 router.post("/signup", (req, res) => {
   const { name, email, password, github, linkedin, pic } = req.body;
@@ -29,6 +38,14 @@ router.post("/signup", (req, res) => {
         user
           .save()
           .then(() => {
+            transporter.sendMail({
+              to: user.email,
+              from: "<Your Email>",
+              subject: "Signup succesfully",
+              html: `<h1>Welcome to DevConnect</h1>
+                        <p>Welcome <b>${user.name}</b> to DevConnect Family. Please start your journey by creating a post.</p>
+                         <span>Till Then Post , Scroll and Enjoy !!</span>`
+            })
             res.json({ message: "saved successfully" });
           })
           .catch((err) => res.status(404).send(err));
