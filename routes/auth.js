@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
+const crypto = require('crypto')
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET, SENDGRID_API_KEY } = require("../config/keys");
-const requireLogin = require("../middleware/requireLogin");
+const { JWT_SECRET, SENDGRID_API_KEY, EMAIL } = require("../config/keys");
+const checkAuth = require("../middleware/requireLogin");
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
 
@@ -40,7 +41,7 @@ router.post("/signup", (req, res) => {
           .then(() => {
             transporter.sendMail({
               to: user.email,
-              from: "<Your Email>",
+              from: "ashutoshthakur1409@gmail.com",
               subject: "Signup succesfully",
               html: `<h1>Welcome to DevConnect</h1>
                         <p>Welcome <b>${user.name}</b> to DevConnect Family. Please start your journey by creating a post.</p>
@@ -82,4 +83,53 @@ router.post("/login", (req, res) => {
   });
 });
 
+router.post('/reset-password', (req, res) => {
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) {
+      console.log(err);
+    }
+    console.log(buffer);
+    const token = buffer.toString("hex");
+    User.findOne({ email: req.body.email })
+      .then(user => {
+        if (!user) {
+          return res.status(422).json({ error: "User don't exist" })
+        }
+        user.resetToken = token,
+          user.expireToken = Date.now() + 3600000
+        user.save().then(result => {
+          transporter.sendMail({
+            to: user.email,
+            from: "ashutoshthakur1409@gmail.com",
+            subject: "Password Reset",
+            html: `
+            <p>You requested for Password Reset</p>
+            <h5>Click in this <a href="${EMAIL}/reset/${token}"></a> to Reset Password</h5>
+          `
+          })
+          res.json({ message: "Check your email" })
+        })
+      })
+  })
+})
+
+router.post('/new-password', (req, res) => {
+  const newPassword = req.body.password;
+  const sentToken = req.body.token;
+  User.findOne({ resetToken: sentToken, expireToken: { $gt: Date.now() } })
+    .then(user => {
+      if (!user) {
+        return res.status(422).json({ error: "Try Again !, Session Expired" })
+      }
+      bcrypt.hash(newPassword, 12).then(hashedPassword => {
+        user.password = hashedPassword
+        user.resetToken = undefined
+        user.expireToken = undefined
+        user.save().then(savedUser => {
+          res.json({ message: "Uploaded sucessfully" })
+        })
+
+      })
+    }).catch(err => console.log(err))
+})
 module.exports = router;

@@ -31,6 +31,8 @@ const userSchema = new mongoose.Schema({
       }
     },
   },
+  resetToken: String,
+  expireToken: Date,
   github: {
     type: String
   },
