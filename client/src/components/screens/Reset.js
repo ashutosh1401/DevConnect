@@ -15,13 +15,6 @@ const Reset = () => {
             M.toast({ html: "Invalid Email", classes: "#e53935 red darken-1" });
             return;
         }
-        if (password.length <= 6) {
-            M.toast({
-                html: "Password must be larger than 6 char",
-                classes: "#e53935 red darken-1",
-            });
-            return;
-        }
         fetch("/reset-password", {
             method: "post",
             headers: {
