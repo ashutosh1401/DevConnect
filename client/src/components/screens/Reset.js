@@ -23,8 +23,7 @@ const Reset = () => {
             body: JSON.stringify({
                 email,
             }),
-        })
-            .then((res) => res.json())
+        }).then((res) => res.json())
             .then((data) => {
                 //console.log(data);
                 if (data.error) {
