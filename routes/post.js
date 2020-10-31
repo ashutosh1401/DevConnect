@@ -117,15 +117,17 @@ router.put('/deletecomment', checkAuth, (req, res) => {
     $pull: { comments: comment }
   }, {
     new: true
-  }).exec((err, result) => {
-    if (err) {
-      console.log(err);
-      return res.status(422).json({ error: err })
-    }
-    else {
-      res.json(result)
-    }
-  })
+  }).populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name")
+    .exec((err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(422).json({ error: err })
+      }
+      else {
+        res.json(result)
+      }
+    })
 })
 
 router.delete("/deletepost/:postId", checkAuth, (req, res) => {
