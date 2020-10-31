@@ -112,6 +112,22 @@ router.put('/comment', checkAuth, (req, res) => {
     })
 })
 
+router.put('/deletecomment', checkAuth, (req, res) => {
+  Post.findByIdAndUpdate(req.body.postId, {
+    $pull: { comments: comment }
+  }, {
+    new: true
+  }).exec((err, result) => {
+    if (err) {
+      console.log(err);
+      return res.status(422).json({ error: err })
+    }
+    else {
+      res.json(result)
+    }
+  })
+})
+
 router.delete("/deletepost/:postId", checkAuth, (req, res) => {
   Post.findOne({ _id: req.params.postId })
     .populate("postedBy", "_id")
