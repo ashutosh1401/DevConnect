@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { UserContext } from "../../App"
+import { UserContext } from "../../App";
 import M from "materialize-css";
 
 const Login = () => {
-  const { state, dispatch } = useContext(UserContext)
+  const { state, dispatch } = useContext(UserContext);
   const history = useHistory();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -43,7 +43,7 @@ const Login = () => {
         } else {
           localStorage.setItem("jwt", data.token);
           localStorage.setItem("user", JSON.stringify(data.user));
-          dispatch({ type: "USER", payload: data.user })
+          dispatch({ type: "USER", payload: data.user });
           M.toast({
             html: "Signed in Successfully",
             classes: "#76ff03 light-green accent-3",
@@ -56,36 +56,48 @@ const Login = () => {
       });
   };
   return (
-    <div className="login-card">
-      <div className="card auth-card input-field">
-        <h2>DevConnect</h2>
-        <input
-          type="email"
-          placeholder="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+    <>
+      <div className="login-card">
+        <div className="card auth-card input-field">
+          <h2>DevConnect</h2>
+          <input
+            type="email"
+            placeholder="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <button
-          className="btn waves-effect waves-light #039be5 light-blue darken-1"
-          onClick={() => PostData()}
-        >
-          Login
-        </button>
-        <h5>
-          <Link to="/signup">Don't have an account ?</Link>
-        </h5>
-        <h6>
-          <Link to="/reset">Forgot Password</Link>
-        </h6>
+          <button
+            className="btn waves-effect waves-light #039be5 light-blue darken-1"
+            onClick={() => PostData()}
+          >
+            Login
+          </button>
+          <h5>
+            <Link to="/signup">Don't have an account ?</Link>
+          </h5>
+          <h6>
+            <Link to="/reset">Forgot Password</Link>
+          </h6>
+        </div>
       </div>
-    </div>
+      <div className="container">
+        <div className="col s12 m12 l12">
+          <p className="info-login">
+            Demo <b>UserName: abcd@gmail.com </b>
+          </p>
+          <p className="info-login">
+            <b>Password: 1234567</b>
+          </p>
+        </div>
+      </div>
+    </>
   );
 };
 

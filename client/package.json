@@ -11,9 +11,11 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "source-map-explorer": "^2.5.0"
   },
   "scripts": {
+    "analyze": "source-map-explorer 'build/static/js/*.js' --html 'build/index.html'",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
